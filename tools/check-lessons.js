@@ -223,7 +223,8 @@ function main() {
     if (r.error) { console.log(file + '  ERROR  ' + r.error); failed++; continue; }
     const L = r.lesson;
     const { errs, warns, stats } = check(L, file);
-    (L.vocab || []).forEach(v => { if (Array.isArray(v) && typeof v[0] === 'string') (wordsByDay[v[0].toLowerCase().trim()] = wordsByDay[v[0].toLowerCase().trim()] || []).push(L.day); });
+    /* review days repeat their week's words on purpose, so only lesson and exam days count here */
+    if (L.kind !== 'review') (L.vocab || []).forEach(v => { if (Array.isArray(v) && typeof v[0] === 'string') (wordsByDay[v[0].toLowerCase().trim()] = wordsByDay[v[0].toLowerCase().trim()] || []).push(L.day); });
     const line = file.padEnd(10) + (errs.length ? 'FAIL ' : 'ok   ') + stats.kind.padEnd(7) + ' dialogue ' + String(stats.spoken).padStart(2) + ' lines · vocab ' + String(stats.vocab).padStart(2)
       + ' · practice ' + stats.sets + ' sets/' + String(stats.items).padStart(2) + ' items · reading ' + String(stats.rwords).padStart(3) + ' words · quiz ' + stats.quiz + (stats.listen ? ' · listen ' + stats.listen : '');
     console.log(line);
@@ -233,7 +234,7 @@ function main() {
   }
   if (files.length > 1) {
     const dups = Object.entries(wordsByDay).filter(([, d]) => d.length > 1);
-    if (dups.length) console.log('\nwords taught on more than one day (fine for review days, otherwise pick another word): ' + dups.map(([w, d]) => w + ' (' + d.join(', ') + ')').join('; '));
+    if (dups.length) console.log('\nwords taught on more than one lesson day (review days left out; keep each word on its earlier day): ' + dups.map(([w, d]) => w + ' (' + d.join(', ') + ')').join('; '));
   }
   console.log('\n' + (failed ? failed + ' file(s) with errors' : 'all ' + files.length + ' file(s) ok'));
   process.exit(failed ? 1 : 0);
