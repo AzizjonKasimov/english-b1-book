@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>30 Günde İngilizce</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root{
+  --bg:#F2F4F8; --surface:#FFFFFF; --ink:#171A21; --muted:#5A6272; --line:#D5DAE3;
+  --accent:#1D4FB5; --accent-ink:#FFFFFF; --soft:#E6EDF9;
+  --plate:#1D4FB5; --plate-ink:#FFFFFF; --plate-line:#FFFFFF;
+  --mark:#FFE58A; --mark-ink:#1C1B18;
+  --ok:#1E7F4E; --ok-soft:#E1F2E8; --warn:#B42318; --warn-soft:#FBE9E7;
+  --shadow:0 1px 2px rgba(20,30,60,.06),0 6px 20px rgba(20,30,60,.08);
+  --display:"Overpass","Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Sans 3","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --side-w:272px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#14171D; --surface:#1D2129; --ink:#ECEEF3; --muted:#A4AAB8; --line:#30353F;
+    --accent:#8AB4F8; --accent-ink:#0E1A2C; --soft:#1F2B40;
+    --plate:#2A5FD0; --plate-ink:#FFFFFF; --plate-line:#FFFFFF;
+    --mark:#E9C64A; --mark-ink:#1C1B18;
+    --ok:#4FC48C; --ok-soft:#173225; --warn:#F28B82; --warn-soft:#3A1F1D;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#14171D; --surface:#1D2129; --ink:#ECEEF3; --muted:#A4AAB8; --line:#30353F;
+  --accent:#8AB4F8; --accent-ink:#0E1A2C; --soft:#1F2B40;
+  --plate:#2A5FD0; --plate-ink:#FFFFFF; --plate-line:#FFFFFF;
+  --mark:#E9C64A; --mark-ink:#1C1B18;
+  --ok:#4FC48C; --ok-soft:#173225; --warn:#F28B82; --warn-soft:#3A1F1D;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+p{margin:0 0 10px}
+ul,ol{margin:0 0 10px;padding-left:22px}
+li{margin:3px 0}
+strong,b{font-weight:600}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+/* layout */
+.app{display:grid;grid-template-columns:var(--side-w) minmax(0,1fr);min-height:100%}
+.topbar{display:none}
+.side{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;overflow-x:hidden;background:var(--surface);border-right:1px solid var(--line);padding:20px 14px 30px}
+.main{padding-block:28px 80px;padding-inline:24px;min-width:0}
+.wrap{max-width:760px;margin:0 auto}
+.backdrop{display:none}
+@media (max-width:899px){
+  .app{display:block}
+  .topbar{display:flex;align-items:center;gap:10px;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line);padding:10px 16px}
+  .topbar .tb-title{font-family:var(--display);font-weight:700;font-size:19px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar .tb-prog{font-family:var(--display);font-weight:600;font-size:14px;color:var(--muted);white-space:nowrap}
+  .side{position:fixed;top:0;left:0;bottom:0;width:min(86vw,330px);height:auto;transform:translateX(-102%);transition:transform .22s ease;z-index:40;padding-top:calc(16px + env(safe-area-inset-top,0px));box-shadow:var(--shadow)}
+  .side.open{transform:none}
+  .backdrop{position:fixed;inset:0;background:rgba(10,14,20,.45);z-index:30}
+  .backdrop.show{display:block}
+  .main{padding-inline:16px;padding-block:20px 70px}
+}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer}
+.icon-btn svg{width:22px;height:22px}
+
+/* sidebar */
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:14px;text-decoration:none;color:inherit}
+.brand-plate{background:var(--plate);color:var(--plate-ink);border:2px solid var(--plate-line);box-shadow:0 0 0 2px var(--plate);border-radius:6px;font-family:var(--display);font-weight:700;font-size:18px;padding:5px 8px 3px;letter-spacing:.02em}
+.brand-t{font-family:var(--display);font-weight:700;font-size:19px;line-height:1.1}
+.brand-s{font-size:13px;color:var(--muted)}
+.progress{margin:6px 0 18px}
+.pbar{height:8px;background:var(--line);border-radius:999px;overflow:hidden}
+.pbar span{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.ptext{font-size:13px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
+.nav a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);padding:6px 8px;border-radius:6px;font-size:15px;line-height:1.25}
+.nav a:hover{background:var(--soft)}
+.nav a.active{background:var(--accent);color:var(--accent-ink)}
+.nav a.active .n{color:inherit;opacity:.85}
+.nav .n{font-family:var(--display);font-weight:600;font-size:14px;width:22px;text-align:right;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
+.nav .t{flex:1;min-width:0}
+.nav .d{width:18px;height:18px;flex:none;color:var(--ok);visibility:hidden}
+.nav a.isdone .d{visibility:visible}
+.nav a.active .d{color:var(--accent-ink)}
+.nav-wk{font-family:var(--display);font-weight:600;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 8px 4px}
+.nav-wk small{display:block;letter-spacing:0;text-transform:none;font-weight:500;font-size:12px}
+
+/* plate: a British motorway sign, blue with a white ring */
+.plate{background:var(--plate);color:var(--plate-ink);border:3px solid var(--plate-line);box-shadow:0 0 0 2px var(--plate),var(--shadow);border-radius:12px;padding:14px 20px;display:flex;gap:18px;align-items:center}
+.plate-num{display:flex;flex-direction:column;align-items:center;line-height:1;flex:none;padding-right:18px;border-right:2px solid rgba(255,255,255,.7)}
+.plate-k{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+.plate-n{font-family:var(--display);font-weight:700;font-size:54px;font-variant-numeric:tabular-nums}
+.plate h1{font-weight:700;font-size:30px}
+.plate p{margin:4px 0 0;font-size:15.5px;opacity:.9}
+@media (max-width:520px){.plate{padding:12px 14px;gap:12px}.plate-n{font-size:42px}.plate h1{font-size:24px}}
+
+/* day bar and timer */
+.daybar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+.timer{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.t-time{font-family:var(--display);font-weight:700;font-size:26px;font-variant-numeric:tabular-nums;min-width:70px}
+.timer.over .t-time{color:var(--warn)}
+.t-label{font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-family:var(--display);font-weight:600;max-width:150px}
+.t-total{font-size:13.5px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
+
+/* buttons */
+.btn{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.03em;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:7px;padding:8px 14px 6px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;line-height:1.2;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.sm{padding:5px 10px 4px;font-size:14px}
+.btn.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn svg{width:16px;height:16px}
+.say{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--line);background:var(--surface);color:var(--accent);border-radius:50%;cursor:pointer;vertical-align:middle;flex:none;padding:0;margin-right:4px}
+.say svg{width:16px;height:16px}
+.say:hover{background:var(--soft)}
+.reveal{font-family:var(--display);font-weight:600;font-size:13.5px;letter-spacing:.03em;border:1px solid var(--line);background:var(--surface);color:var(--accent);border-radius:6px;padding:4px 9px 2px;cursor:pointer;margin-top:4px}
+.reveal:hover{background:var(--soft)}
+.ex-en{font-weight:600}
+
+/* sections */
+.sec{margin-top:34px}
+.sec>h2{font-weight:600;font-size:25px;margin-bottom:12px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sec>h2 .en{font-family:var(--body);font-weight:400;font-size:15px;color:var(--muted)}
+.chip{font-family:var(--display);font-weight:600;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--soft);color:var(--accent);border-radius:999px;padding:4px 10px 2px;white-space:nowrap;position:relative;top:-3px;border:1px solid transparent}
+button.chip{cursor:pointer;font-variant-numeric:tabular-nums}
+button.chip:hover{border-color:var(--accent)}
+.chip.running{background:var(--accent);color:var(--accent-ink)}
+.chip.over{background:var(--warn-soft);color:var(--warn)}
+.goal-list{margin-top:6px}
+.plan{display:flex;gap:3px;height:28px;margin:16px 0 6px;border-radius:6px;overflow:hidden}
+.plan span{display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:12.5px;font-weight:600;color:var(--accent-ink);background:var(--accent);min-width:0;overflow:hidden;white-space:nowrap;letter-spacing:.02em;padding:2px 4px 0}
+.plan span:nth-child(even){opacity:.78}
+.plan-note{font-size:13px;color:var(--muted)}
+
+/* dialogue */
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.scene{font-size:15px;color:var(--muted);font-style:italic;margin-bottom:10px}
+.dlg{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.line{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:start}
+.line.narr{grid-template-columns:1fr}
+.line .who{font-family:var(--display);font-weight:600;color:var(--accent);padding-top:3px;min-width:60px;font-size:15.5px}
+.line .de{font-size:18px;display:flex;gap:8px;align-items:flex-start}
+.line .de span{flex:1}
+.line .en{grid-column:2;color:var(--muted);font-size:15px}
+.line.narr .en{grid-column:1}
+.dlg.hide-en .en{display:none}
+.line.playing{background:var(--soft);box-shadow:0 0 0 6px var(--soft);border-radius:6px}
+.note{font-size:15px;color:var(--muted)}
+.tts-note{display:none;font-size:14px;color:var(--warn);background:var(--warn-soft);border-radius:6px;padding:6px 10px;margin-bottom:10px}
+.tts-note.show{display:block}
+.sub{font-size:19px;font-weight:600;margin:18px 0 6px}
+
+/* vocab */
+.vg{border-top:1px solid var(--line);margin-top:8px}
+.vrow{display:grid;grid-template-columns:1.15fr 1fr;gap:4px 10px;padding:9px 4px;border-bottom:1px solid var(--line)}
+.vde{display:flex;gap:6px;align-items:flex-start}
+.vde .w{font-weight:600}
+.ven{color:var(--muted);align-self:start;padding-top:2px}
+.vex{grid-column:1 / -1;display:flex;gap:6px;align-items:flex-start;font-size:15px}
+.vex .say{width:24px;height:24px}
+.vex .say svg{width:14px;height:14px}
+.vex .exen{flex:0 1 auto}
+.vex .extr{color:var(--muted);font-size:14.5px;display:block}
+.vex div{flex:1}
+.vg.test .vrow{cursor:pointer;position:relative}
+.vg.test .vrow:not(.show) .ven,.vg.test .vrow:not(.show) .extr{visibility:hidden}
+.vg.test .vrow:not(.show)::after{content:"görmek için dokun";grid-column:2;grid-row:1;justify-self:start;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-family:var(--display);align-self:center}
+.vg.test .vrow:not(.show) .ven{position:absolute;pointer-events:none}
+
+/* grammar */
+.gb{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:12px}
+.gb h3{font-size:20px;font-weight:600;margin-bottom:8px}
+.gb h4,.speak-box h4,.read-box h4,.tip h4{font-size:16px;font-weight:600;margin:14px 0 4px}
+.gb p:last-child{margin-bottom:0}
+.scroll{overflow-x:auto;margin:8px 0 10px}
+table.tbl{border-collapse:collapse;width:100%;font-size:15.5px}
+.tbl th,.tbl td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+.tbl th{font-family:var(--display);font-weight:600;background:var(--soft);color:var(--ink);letter-spacing:.02em}
+.tbl td.k{font-weight:600}
+.ex{margin:6px 0}
+.ex .q{margin:0}
+.ans{color:var(--ok);font-weight:600;margin-top:2px}
+.ans .ex-en{color:var(--ok)}
+.ans .tr{display:block;color:var(--muted);font-weight:400;font-size:14.5px;margin-top:2px}
+.exl{margin-top:6px}
+.set{margin-top:16px}
+.set h3{font-size:19px;font-weight:600;margin-bottom:4px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.tally{font-family:var(--body);font-weight:400;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.rule{background:var(--soft);border-radius:8px;padding:10px 14px;margin:10px 0}
+.hl{background:var(--soft);padding:0 4px;border-radius:3px}
+.warm-list{margin-top:6px}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:2px}
+.score{display:flex;gap:6px;margin-top:4px}
+.sc{font-family:var(--display);font-weight:600;font-size:12.5px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:6px;padding:3px 8px 1px;cursor:pointer}
+.sc:hover{border-color:var(--accent);color:var(--accent)}
+.ex.right .sc.ok{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
+.ex.wrong .sc.no{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
+
+/* reading, listening, speaking, writing */
+.read-box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:17.5px;line-height:1.6}
+.read-box p:last-child{margin-bottom:0}
+.gloss{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;padding:6px 0;border-bottom:1px solid var(--line)}
+.gloss .g{display:flex;gap:6px;align-items:flex-start;font-weight:600}
+.gloss .e{color:var(--muted)}
+.speak-box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.speak-box p:last-child{margin-bottom:0}
+.model{margin-top:10px;background:var(--surface);border:1px solid var(--ok);border-radius:12px;padding:14px 18px;color:var(--ink);font-weight:400}
+.model p:last-child{margin-bottom:0}
+.checklist{list-style:none;padding:0;margin-top:6px}
+.checklist li{display:flex;gap:10px;align-items:flex-start;padding:4px 0}
+.checklist input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--ok)}
+.tip{border-left:5px solid var(--plate);background:var(--surface);padding:14px 18px;border-radius:0 12px 12px 0;margin-top:34px}
+.tip h3{font-size:19px;font-weight:600;margin-bottom:6px}
+.tip .k{font-family:var(--display);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cando ul{list-style:none;padding:0}
+.cando li{display:flex;gap:10px;align-items:flex-start;padding:5px 0}
+.cando li svg{width:20px;height:20px;color:var(--ok);flex:none;margin-top:3px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:18px;border-top:1px solid var(--line);flex-wrap:wrap}
+.pager a{font-family:var(--display);font-weight:600;font-size:16px;text-decoration:none}
+
+/* start and appendix pages */
+.hero{background:var(--plate);color:var(--plate-ink);border:3px solid var(--plate-line);box-shadow:0 0 0 2px var(--plate),var(--shadow);border-radius:12px;padding:22px 26px}
+.hero h1{font-size:44px;font-weight:700}
+.hero p{font-size:17px;margin:6px 0 0;max-width:36em}
+@media (max-width:520px){.hero h1{font-size:34px}.hero{padding:16px 18px}}
+.cont{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+.cont .big{font-family:var(--display);font-weight:600;font-size:20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card h3{font-size:19px;font-weight:600;margin-bottom:4px}
+.card .k{font-family:var(--display);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.card ol{padding-left:18px;margin:6px 0 0;font-size:15px}
+.card a{text-decoration:none}
+.callout{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:0 12px 12px 0;padding:14px 18px;margin:16px 0}
+.callout h3{font-size:19px;font-weight:600;margin-bottom:6px}
+.pron td:first-child{font-weight:600;white-space:nowrap}
+.page h2{font-size:26px;font-weight:600;margin:32px 0 10px}
+.page h3{font-size:20px;font-weight:600;margin:18px 0 6px}
+.phr{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;padding:6px 0;border-bottom:1px solid var(--line)}
+.phr .g{display:flex;gap:6px;align-items:flex-start;font-weight:600}
+.phr .e{color:var(--muted)}
+.mis{padding:8px 0;border-bottom:1px solid var(--line)}
+.mis .bad{color:var(--warn);text-decoration:line-through;text-decoration-thickness:1.5px}
+.mis .good{font-weight:600;display:flex;gap:6px;align-items:flex-start}
+.mis .why{color:var(--muted);font-size:15px}
+.tr-break td{background:var(--soft);font-style:italic;color:var(--muted)}
+@media (max-width:520px){.phr,.gloss{grid-template-columns:1fr}.vrow{grid-template-columns:1fr 1fr}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a4 4 0 0 1 0 7M18.6 6a7.6 7.6 0 0 1 0 12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></symbol>
+</svg>
+
+<div class="app">
+  <header class="topbar">
+    <button class="icon-btn" id="menu-btn" type="button" aria-label="Bölüm listesini aç"><svg><use href="#i-menu"/></svg></button>
+    <div class="tb-title">30 Günde İngilizce</div>
+    <div class="tb-prog" id="tb-prog">0 / 30</div>
+  </header>
+  <aside class="side" id="side">
+    <a class="brand" href="#start"><div class="brand-plate">EN30</div><div><div class="brand-t">30 Günde İngilizce</div><div class="brand-s">A2 → B1 · günde 5 saat</div></div></a>
+    <div class="progress"><div class="pbar"><span id="pfill"></span></div><div class="ptext" id="ptext">0 / 30 gün tamamlandı</div></div>
+    <nav class="nav" id="nav" aria-label="Bölümler"></nav>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+  <main class="main" id="main"></main>
+</div>
+
+<template id="tpl-start">
+<div class="page">
+  <div class="hero"><div class="plate-k">İngilizce · A2 → B1</div><h1>30 Günde İngilizce</h1><p>Türkçe anlatımlı, 30 günlük yoğun İngilizce kursu: A2'den B1'e, günde 5 saat. Her gün dinleme, kelime, dilbilgisi, alıştırma, okuma, konuşma ve yazma; her İngilizce cümle için kayıtlı ses.</p></div>
+  <div class="cont"><div><div class="big" id="cont-title">Gün 1 ile başla</div><div class="note" id="cont-sub">İlerlemen bu tarayıcıda, bu cihazda saklanır.</div></div><a class="btn" id="cont-btn" href="#day1">Gün 1'i aç</a></div>
+
+  <h2>Bu kitap nedir?</h2>
+  <p>Otuz gün, her gün 300 dakikalık bir çalışma planı: 15 dakika ısınma, 45 dakika dinleme ve diyalog, 45 dakika kelime, 60 dakika dilbilgisi, 45 dakika alıştırma, 40 dakika okuma, 20 dakika konuşma, 20 dakika yazma ve 10 dakikalık günün sınavı. 7, 14, 21 ve 28. günler mini sınavlı tekrar günleri; 29. gün B1 Preliminary sınavının provası; 30. gün final sınavı ve devam planı.</p>
+  <p>30. günün sonunda B1 dilbilgisinin tamamını ve yaklaşık 900 yeni kelime ile kalıbı görmüş, 30 diyalog dinlemiş, 30 metin okumuş ve 30 yazı yazmış olacaksın. B1 demek: tanıdık konularda rahatça anlaşmak, dinlediğin ve okuduğun şeyin ana fikrini yakalamak, bir deneyimi, bir planı ve bir fikri gerekçesiyle anlatabilmek, basit ama bağlantılı metinler yazabilmek. Cambridge B1 Preliminary, IELTS 4.0–5.0 ve TOEFL iBT 42–71 bandı yaklaşık olarak bu seviyeye denk gelir.</p>
+
+  <div class="callout"><h3>Saatler konusunda gerçekçi ol</h3>
+  <p>Dil okulları A2'den B1'e geçiş için 150–200 ders saati planlar. Bu kitap 30 günde 150 saat odaklı çalışma verir: malzemeyi bir kez tam görmek için yeterli, sindirmek için yoğun bir tempo. Her saat başı 10 dakika mola ver; molalar 5 saate dahil değil. Bir günü yetiştiremezsen ertesi gün iki gün yapma, kaldığın yerden devam et. Günde 5 saat ayıramıyorsan her günü ikiye böl ve kitabı 60 günde bitir; plan aynı kalır.</p></div>
+
+  <h2>300 dakikalık günün planı</h2>
+  <p>Her bölümün başlığındaki süre düğmesine tıkla; sayaç o bölüm için geri sayar ve sayfanın üstünde çalıştığın toplam süreyi gösterir.</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Süre</th><th>Bölüm</th><th>Ne yapacaksın</th></tr>
+    <tr><td class="k">15 dk</td><td>Warm-up · Isınma</td><td>Dünkü cümleleri sesli söyle. Cevabı ancak denedikten sonra aç.</td></tr>
+    <tr><td class="k">45 dk</td><td>Listening · Dinleme ve diyalog</td><td>Önce okumadan dinle, sonra okuyarak dinle, soruları cevapla, en son her satırı gölge gibi tekrar et (shadowing).</td></tr>
+    <tr class="tr-break"><td></td><td colspan="2">10 dakika mola</td></tr>
+    <tr><td class="k">45 dk</td><td>Vocabulary · Kelimeler</td><td>Her kelimeyi ve örnek cümleyi dinle, sesli tekrar et. Sonra Türkçeyi gizleyip kendini sına.</td></tr>
+    <tr><td class="k">60 dk</td><td>Grammar · Dilbilgisi</td><td>Kuralı oku, her örneği sesli söyle, “Türkçe ile karşılaştır” kısmını dikkatle oku. Tabloları ezberleme, kullan.</td></tr>
+    <tr class="tr-break"><td></td><td colspan="2">15 dakika mola</td></tr>
+    <tr><td class="k">45 dk</td><td>Practice · Alıştırmalar</td><td>Cevapları açmadan önce elle yaz. Sonra kendini puanla; yanlışları hata defterine yaz.</td></tr>
+    <tr><td class="k">40 dk</td><td>Reading · Okuma</td><td>Üç kez oku: ana fikir için, sözlükçeyle ayrıntı için, sesle birlikte sesli.</td></tr>
+    <tr class="tr-break"><td></td><td colspan="2">10 dakika mola</td></tr>
+    <tr><td class="k">20 dk</td><td>Speaking · Konuşma</td><td>Diyaloğu gölgele, bir dakikalık konuşmanı telefona kaydet, rol oyununu yap.</td></tr>
+    <tr><td class="k">20 dk</td><td>Writing · Yazma</td><td>90–120 kelime yaz, örnek cevapla karşılaştır, kontrol listesini işaretle.</td></tr>
+    <tr><td class="k">10 dk</td><td>Day quiz · Günün sınavı</td><td>Bakmadan cevapla. 10 üzerinden 8 ve üstü: yarına hazırsın.</td></tr>
+  </table></div>
+
+  <h2>En çok verim için</h2>
+  <ul>
+    <li><b>Her şeyi sesli söyle.</b> İngilizce ağızla öğrenilir. Her diyalog satırı, kelime, örnek cümle ve okuma metni doğal İngiliz ve Amerikan sesleriyle kaydedildi; hoparlör düğmesine bas, dinle, aynısını söyle. Bir günün sesi, o günde ilk düğmeye bastığında yüklenir.</li>
+    <li><b>Kelimeleri cümleyle öğren.</b> “colleague” değil, “My colleagues are friendly.” Kelime listesindeki her örnek cümleyi de dinle ve tekrar et.</li>
+    <li><b>Hata defteri tut.</b> Yanlış cümle, doğru cümle, kural. Her sabah ısınmadan önce iki dakika oku.</li>
+    <li><b>Elle yaz.</b> Alıştırma cevaplarını açmadan önce kâğıda yaz; yazmak imlayı ve dizilişi sabitler. Sonra ✓ / ✗ ile kendini puanla.</li>
+    <li><b>Bir günü kaçırdın mı?</b> İkiye katlama; sıradaki güne geç ve ritmi koru.</li>
+    <li><b>Her günü “tamamlandı” işaretle.</b> Bölüm listesi ilerlemeni gösterir ve başlangıç sayfası her zaman sıradaki günü önerir.</li>
+  </ul>
+
+  <h2>Türkçe konuşanlar için telaffuz notları</h2>
+  <p>Bir kez şimdi oku, sonra bir kelime seni şaşırttığında geri dön. Hoparlöre basıp örnekleri dinle ve tekrar et.</p>
+  <div class="scroll"><table class="tbl pron">
+    <tr><th>Ses</th><th>Sorun ve çözüm</th><th>Örnekler</th></tr>
+    <tr><td>th (/θ/ ve /ð/)</td><td>Türkçede yok. Dilin ucunu dişlerinin arasına koy ve hava üfle; “t, d, s, z” deme.</td><td>think, thank you, three, mother, this, that <button class="say" type="button" data-say="think, thank you, three, mother, this, that" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+    <tr><td>w ve v</td><td>Türkçede w yok. w'de dudaklar yuvarlak, dişler değmez; v'de üst dişler alt dudağa değer.</td><td>wine, vine, west, vest, very well, we live <button class="say" type="button" data-say="wine, vine, west, vest, very well, we live" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+    <tr><td>æ, e, ʌ</td><td>cat, bed ve cup üç ayrı sestir. “cat” için ağzını iyice aç; “cup” kısa ve kapalı bir “a”.</td><td>cat, bad, man, bed, men, cup, but, love <button class="say" type="button" data-say="cat, bad, man, bed, men, cup, but, love" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+    <tr><td>ɪ ve iː</td><td>ship / sheep: biri kısa (ı ile i arası), diğeri uzun ve gergin “ii”.</td><td>ship, sheep, live, leave, sit, seat, fill, feel <button class="say" type="button" data-say="ship, sheep, live, leave, sit, seat, fill, feel" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+    <tr><td>r</td><td>İngilizce r titremez; dil damağa değmez, geriye kıvrılır. İngiliz aksanında kelime sonundaki r çoğu zaman okunmaz.</td><td>red, really, sorry, car, work, teacher <button class="say" type="button" data-say="red, really, sorry, car, work, teacher" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+    <tr><td>s + ünsüz ile başlayan kelimeler</td><td>“istasyon” değil “station”: başa i ekleme.</td><td>station, school, sport, street, strong, Spain <button class="say" type="button" data-say="station, school, sport, street, strong, Spain" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+    <tr><td>-s ve -ed ekleri</td><td>-s üç şekilde okunur: /s/ works, /z/ lives, /ɪz/ watches. -ed de üç şekilde: /t/ walked, /d/ played, /ɪd/ wanted.</td><td>works, lives, watches, walked, played, wanted <button class="say" type="button" data-say="works, lives, watches, walked, played, wanted" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+    <tr><td>Kelime vurgusu</td><td>Türkçede vurgu çoğunlukla son hecededir; İngilizcede her kelimenin kendi vurgusu vardır ve yanlış hece anlaşılmayı bozar.</td><td>TEAcher, hoTEL, comPUter, underSTAND, inforMAtion <button class="say" type="button" data-say="teacher, hotel, computer, understand, information" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+    <tr><td>Schwa (/ə/)</td><td>Vurgusuz hecelerdeki belirsiz, kısa “ı” gibi ses. İngilizcenin en sık sesi: about, teacher, London.</td><td>about, banana, teacher, London, camera <button class="say" type="button" data-say="about, banana, teacher, London, camera" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+    <tr><td>Sessiz harfler</td><td>Yazılan her harf okunmaz: hour, know, listen, island.</td><td>hour, honest, know, listen, island, Wednesday <button class="say" type="button" data-say="hour, honest, know, listen, island, Wednesday" aria-label="Dinle"><svg><use href="#i-speaker"/></svg></button></td></tr>
+  </table></div>
+
+  <h2>Diyaloglardaki kişiler</h2>
+  <p>Kitap boyunca aynı insanları izleyeceksin; durumlar birbirinin üstüne kurulur.</p>
+  <div class="cards">
+    <div class="card"><div class="k">İzmir'den</div><h3>Elif Kaya</h3><p class="note">27, Londra'da küçük bir pazarlama ajansında (Brightside) yeni işe başladı. Camden'da paylaşımlı bir dairede oturuyor. Çalışkan, biraz çekingen.</p></div>
+    <div class="card"><div class="k">Leeds'ten</div><h3>James Walker</h3><p class="note">30, Elif'in ev arkadaşı, hastanede hemşire, vardiyalı çalışıyor. Rahat ve dobra; günlük İngiliz İngilizcesi.</p></div>
+    <div class="card"><div class="k">Brightside</div><h3>Priya Shah</h3><p class="note">34, Elif'in yöneticisi. Sabırlı, düzenli, net konuşur.</p></div>
+    <div class="card"><div class="k">Brightside</div><h3>Daniel</h3><p class="note">38, tasarımcı, Manchester'lı. Konuşkan, esprili, sabah insanı değil.</p></div>
+    <div class="card"><div class="k">Chicago'dan</div><h3>Tom Reyes</h3><p class="note">26, Londra'da yüksek lisans öğrencisi, Elif'in dil kulübünden arkadaşı. Amerikan İngilizcesi konuşur: “apartment”, “elevator”.</p></div>
+    <div class="card"><div class="k">Alt kat</div><h3>Mrs Taylor</h3><p class="note">68, ev sahibi. İyi kalpli ama kurallara düşkün.</p></div>
+    <div class="card"><div class="k">Antalya'dan</div><h3>Mert Kaya</h3><p class="note">24, Elif'in kuzeni, otel resepsiyonunda çalışıyor ve bütün gün turistlerle İngilizce konuşuyor. Telefon ve mesajlarda görünür.</p></div>
+  </div>
+
+  <h2>30 gün</h2>
+  <div class="cards" id="week-cards"></div>
+</div>
+</template>
+
+<template id="tpl-grammar">
+<div class="page">
+  <div class="hero"><div class="plate-k">Ekler</div><h1>Dilbilgisi özeti</h1><p>Kitaptaki bütün B1 kuralları tek sayfada. Ezberlemek için değil, bakmak için.</p></div>
+
+  <h2>1. Zamanlar</h2>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Zaman</th><th>Biçim</th><th>Ne zaman</th><th>Sinyal kelimeler</th><th>Örnek</th></tr>
+    <tr><td class="k">Present simple</td><td>I work / she work<b>s</b> · don't / doesn't · Do / Does …?</td><td>alışkanlık, genel gerçek, tarife, durum fiilleri (know, want, have)</td><td>always, usually, every day, on Mondays</td><td>[[She works in marketing.]]</td></tr>
+    <tr><td class="k">Present continuous</td><td>am / is / are + -ing</td><td>şu an olan, geçici olan, kesin plan (gelecek)</td><td>now, at the moment, today, this week, tomorrow (plan)</td><td>[[I'm meeting Tom at six.]]</td></tr>
+    <tr><td class="k">Past simple</td><td>V2 · didn't + fiil · Did …?</td><td>geçmişte bitmiş olay, belli zaman</td><td>yesterday, last week, in 2019, two years ago</td><td>[[We moved here last year.]]</td></tr>
+    <tr><td class="k">Past continuous</td><td>was / were + -ing</td><td>geçmişte bir anda süren eylem, hikâyenin arka planı</td><td>while, when, at 8 o'clock last night</td><td>[[I was cooking when he called.]]</td></tr>
+    <tr><td class="k">Present perfect</td><td>have / has + V3</td><td>zamanı söylenmeyen deneyim, şimdiye etkisi olan geçmiş, devam eden süre</td><td>ever, never, just, already, yet, for, since, so far</td><td>[[I have lived here for two years.]]</td></tr>
+    <tr><td class="k">Present perfect continuous</td><td>have / has been + -ing</td><td>geçmişte başlayıp hâlâ süren eylem; eylemin kendisi önemli</td><td>for, since, how long, all day</td><td>[[She has been studying all day.]]</td></tr>
+    <tr><td class="k">Past perfect</td><td>had + V3</td><td>geçmişteki iki olaydan daha önce olanı (-mişti)</td><td>before, after, by the time, already, when</td><td>[[The train had left when we arrived.]]</td></tr>
+    <tr><td class="k">will</td><td>will + fiil · won't</td><td>o anda verilen karar, tahmin, söz, teklif</td><td>I think, probably, tomorrow, soon</td><td>[[I'll help you with that.]]</td></tr>
+    <tr><td class="k">going to</td><td>am / is / are going to + fiil</td><td>önceden verilmiş niyet, kanıta dayalı tahmin</td><td>next week, this summer, Look at the clouds!</td><td>[[It's going to rain.]]</td></tr>
+  </table></div>
+  <p><b>Durum fiilleri</b> (know, understand, believe, like, love, want, need, have = sahip olmak, own, seem, belong) -ing almaz: <i>I know, I want, she has</i>.</p>
+
+  <h2>2. Modal fiiller</h2>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Modal</th><th>Anlam</th><th>Örnek</th></tr>
+    <tr><td class="k">can / can't</td><td>yetenek, izin, imkân</td><td>[[Can I open the window?]]</td></tr>
+    <tr><td class="k">could</td><td>geçmiş yetenek; kibar rica; olasılık</td><td>[[Could you help me, please?]]</td></tr>
+    <tr><td class="k">be able to</td><td>yetenek (can'in diğer zamanları); manage to: başarmak</td><td>[[I wasn't able to sleep.]]</td></tr>
+    <tr><td class="k">must</td><td>zorunluluk (konuşanın kendi kararı); güçlü çıkarım</td><td>[[You must be tired.]]</td></tr>
+    <tr><td class="k">have to</td><td>zorunluluk (dış kural)</td><td>[[I have to wear a uniform.]]</td></tr>
+    <tr><td class="k">don't have to</td><td>gerek yok (yasak değil!)</td><td>[[You don't have to come.]]</td></tr>
+    <tr><td class="k">mustn't</td><td>yasak</td><td>[[You mustn't smoke here.]]</td></tr>
+    <tr><td class="k">should / ought to</td><td>tavsiye, doğru olan</td><td>[[You should see a doctor.]]</td></tr>
+    <tr><td class="k">had better</td><td>güçlü tavsiye, uyarı</td><td>[[You'd better leave now.]]</td></tr>
+    <tr><td class="k">may / might</td><td>olasılık; may: izin (resmi)</td><td>[[It might rain later.]]</td></tr>
+    <tr><td class="k">can't (çıkarım)</td><td>imkânsız olduğundan eminim</td><td>[[That can't be true.]]</td></tr>
+    <tr><td class="k">would</td><td>koşul, kibar istek, geçmiş alışkanlık</td><td>[[I'd like a coffee.]]</td></tr>
+  </table></div>
+
+  <h2>3. Koşul cümleleri</h2>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Tür</th><th>if-cümlesi</th><th>ana cümle</th><th>Anlam</th><th>Örnek</th></tr>
+    <tr><td class="k">Zero</td><td>if + present simple</td><td>present simple</td><td>genel gerçek, her zaman böyle</td><td>[[If you heat ice, it melts.]]</td></tr>
+    <tr><td class="k">First</td><td>if + present simple</td><td>will / can / imperative</td><td>gerçek, olası gelecek</td><td>[[If it rains, we'll stay at home.]]</td></tr>
+    <tr><td class="k">Second</td><td>if + past simple</td><td>would / could / might + fiil</td><td>hayalî, olasılığı düşük</td><td>[[If I had more time, I would travel.]]</td></tr>
+  </table></div>
+  <p>Zaman bağlaçlarından sonra gelecek için <i>will</i> kullanılmaz: <i>when, as soon as, until, before, after, unless</i> + present simple: [[I'll call you when I arrive.]] Dilek: <i>I wish + past simple</i>: [[I wish I had a car.]] Tavsiye: [[If I were you, I'd take the job.]]</p>
+
+  <h2>4. Edilgen çatı (passive)</h2>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Zaman</th><th>Etken</th><th>Edilgen</th></tr>
+    <tr><td class="k">Present simple</td><td>They make tea in Kenya.</td><td>[[Tea is made in Kenya.]]</td></tr>
+    <tr><td class="k">Past simple</td><td>They built the bridge in 1894.</td><td>[[The bridge was built in 1894.]]</td></tr>
+    <tr><td class="k">Modal</td><td>You can see the river from here.</td><td>[[The river can be seen from here.]]</td></tr>
+    <tr><td class="k">Present perfect</td><td>Someone has stolen my bike.</td><td>[[My bike has been stolen.]]</td></tr>
+  </table></div>
+  <p>Eylemi yapan önemli değilse ya da bilinmiyorsa edilgen kullanılır; yapan söylenecekse <b>by</b>: [[The report was written by Priya.]]</p>
+
+  <h2>5. Dolaylı anlatım (reported speech)</h2>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Doğrudan</th><th>Dolaylı</th></tr>
+    <tr><td>“I <b>am</b> busy.”</td><td>She said (that) she <b>was</b> busy.</td></tr>
+    <tr><td>“I <b>work</b> here.”</td><td>He said he <b>worked</b> there.</td></tr>
+    <tr><td>“I <b>have finished</b>.”</td><td>She said she <b>had finished</b>.</td></tr>
+    <tr><td>“I <b>saw</b> him.”</td><td>He said he <b>had seen</b> him.</td></tr>
+    <tr><td>“I <b>will</b> call you.”</td><td>She said she <b>would</b> call me.</td></tr>
+    <tr><td>“I <b>can</b> help.”</td><td>He said he <b>could</b> help.</td></tr>
+    <tr><td>“<b>Where do you live?</b>”</td><td>She asked me <b>where I lived</b>.</td></tr>
+    <tr><td>“<b>Are you</b> ready?”</td><td>He asked <b>if I was</b> ready.</td></tr>
+    <tr><td>“<b>Sit down.</b>” / “<b>Don't</b> wait.”</td><td>She told me <b>to sit down</b>. He told me <b>not to wait</b>.</td></tr>
+  </table></div>
+  <p><b>say</b> kişi almaz, <b>tell</b> kişi alır: <i>She said that … / She told me that …</i>. Zaman kelimeleri: today → that day, tomorrow → the next day, yesterday → the day before, here → there, this → that.</p>
+
+  <h2>6. Tanımlıklar ve miktar</h2>
+  <p><b>a / an</b>: sayılabilen tekil isim, ilk kez geçiyor ya da herhangi biri (<i>a job, an hour</i>; meslekler: <i>She's a nurse</i>). <b>the</b>: belli, bilinen, tek olan (<i>the sun, the manager, the station</i>; ikinci kez geçen isim). <b>Tanımlık yok</b>: genel anlamda çoğul ve sayılamayan isimler (<i>Dogs are loyal. Music helps me.</i>), yemekler, diller, çoğu ülke ve şehir, <i>school, work, home, bed</i> (<i>go to work, at home</i>).</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th></th><th>Sayılabilen</th><th>Sayılamayan</th></tr>
+    <tr><td class="k">olumlu</td><td>some, a lot of, many, a few, several</td><td>some, a lot of, much (çoğu zaman olumsuz / soru), a little</td></tr>
+    <tr><td class="k">olumsuz</td><td>not any, no, not many, few</td><td>not any, no, not much, little</td></tr>
+    <tr><td class="k">soru</td><td>any? how many?</td><td>any? how much?</td></tr>
+    <tr><td class="k">aşırı / yeterli</td><td>too many, enough</td><td>too much, enough</td></tr>
+  </table></div>
+  <p>Türkçede sayılabilir görünen ama İngilizcede sayılamayan isimler: <i>information, advice, news, furniture, money, bread, work, homework, luggage, traffic, weather</i> (“an information” değil, <i>a piece of information</i>).</p>
+
+  <h2>7. Soru dizilişi ve dolaylı sorular</h2>
+  <p>Soru kelimesi + yardımcı fiil + özne + fiil: [[Where does she work?]] [[How long have you been here?]] Dolaylı soruda düz cümle sırası, <i>do</i> yok: [[Could you tell me where the station is?]] [[Do you know if the shop is open?]] Soru eki (question tag): olumlu cümle + olumsuz ek: [[It's cold, isn't it?]] olumsuz cümle + olumlu ek: [[You don't like tea, do you?]]</p>
+
+  <h2>8. Fiil kalıpları</h2>
+  <div class="scroll"><table class="tbl">
+    <tr><th>fiil + -ing</th><th>fiil + to</th><th>ikisi de (anlam değişir)</th></tr>
+    <tr><td>enjoy, mind, finish, suggest, keep, avoid, practise, give up, can't stand, fancy, consider, miss, imagine, admit</td><td>want, decide, hope, plan, need, promise, offer, learn, manage, agree, refuse, expect, would like, afford, seem</td><td><b>remember / forget</b> doing (geçmişi hatırlamak) · to do (yapmayı unutmamak) · <b>stop</b> doing (bırakmak) · to do (yapmak için durmak) · <b>try</b> doing (denemek) · to do (çabalamak)</td></tr>
+  </table></div>
+  <p>Edattan sonra -ing: [[I'm interested in learning Spanish.]] [[Thanks for coming.]] <i>look forward to</i> + -ing: [[I'm looking forward to seeing you.]] <i>make / let</i> + yalın fiil: [[My boss made me stay late.]] [[Let me help you.]]</p>
+
+  <h2>9. İlgi cümlecikleri</h2>
+  <p><b>who</b> (kişi), <b>which</b> (nesne), <b>that</b> (ikisi de), <b>where</b> (yer), <b>whose</b> (kimin), <b>when</b> (zaman). Nesne olan zamir atılabilir: [[The film (that) we saw was great.]] Virgüllü (ek bilgi veren) cümlecikte <i>that</i> kullanılmaz: [[My sister, who lives in Izmir, is a doctor.]] Türkçede yan cümle isimden önce gelir (<i>yaşadığım şehir</i>), İngilizcede sonra (<i>the city where I live</i>).</p>
+
+  <h2>10. Bağlaçlar ve metin kurma</h2>
+  <div class="scroll"><table class="tbl">
+    <tr><th>İşlev</th><th>Bağlaçlar</th><th>Örnek</th></tr>
+    <tr><td class="k">karşıtlık</td><td>but, although, even though, though, however, despite / in spite of + isim veya -ing</td><td>[[Although it was late, we went out.]]</td></tr>
+    <tr><td class="k">sebep</td><td>because + cümle, because of + isim, as, since</td><td>[[We stayed in because of the rain.]]</td></tr>
+    <tr><td class="k">sonuç</td><td>so, therefore, as a result, that's why</td><td>[[It was cold, so I wore a coat.]]</td></tr>
+    <tr><td class="k">amaç</td><td>to, in order to, so that + cümle, in case</td><td>[[I left early so that I wouldn't be late.]]</td></tr>
+    <tr><td class="k">ekleme</td><td>and, also, too, as well, both … and, not only … but also</td><td>[[She speaks both Turkish and English.]]</td></tr>
+    <tr><td class="k">sıralama</td><td>first, then, after that, meanwhile, finally, in the end</td><td>[[First we checked in, then we went to the gate.]]</td></tr>
+    <tr><td class="k">fikir</td><td>in my opinion, I think, on the one hand … on the other hand, in conclusion</td><td>[[In my opinion, phones should be allowed.]]</td></tr>
+  </table></div>
+
+  <h2>11. Karşılaştırma</h2>
+  <p>Kısa sıfat: <i>-er / the -est</i> (cheaper, the cheapest; big → bigger; happy → happier). Uzun sıfat: <i>more / the most</i> (more expensive, the most expensive). Düzensiz: good → better → the best; bad → worse → the worst; far → further → the furthest. Eşitlik: <i>as … as</i>: [[London is not as hot as Izmir.]] Derece: <i>much / a lot / a bit + comparative</i>: [[This flat is much bigger.]] <i>too</i> + sıfat (aşırı), sıfat + <i>enough</i> (yeterli): [[The room is too small. It isn't big enough.]]</p>
+
+  <h2>12. Zarfların yeri</h2>
+  <p>Sıklık zarfları (always, usually, often, sometimes, hardly ever, never) normal fiilden önce, <i>to be</i>'den sonra: [[I usually walk to work.]] [[She is never late.]] Derece zarfları (quite, rather, pretty, really, a bit, very) sıfattan önce: [[It's quite expensive.]] Zaman ifadeleri (yesterday, every day, twice a week, last year) cümlenin başında ya da sonunda.</p>
+</div>
+</template>
+
+<template id="tpl-verbs">
+<div class="page">
+  <div class="hero"><div class="plate-k">Ekler</div><h1>Düzensiz fiiller</h1><p>Kitapta geçen düzensiz fiiller: yalın hal, ikinci hal (past simple) ve üçüncü hal (past participle). Hoparlöre basıp üçünü birden dinle.</p></div>
+  <p class="note" style="margin-top:14px">Gruplar halinde ezberle: üçü aynı olanlar (cut, cut, cut), ikinci ve üçüncü hali aynı olanlar (buy, bought, bought), üçü farklı olanlar (go, went, gone). İkinci hal past simple'da, üçüncü hal present perfect, past perfect ve edilgen çatıda kullanılır.</p>
+  <div class="scroll"><table class="tbl" id="verb-table">
+    <tr><th>Yalın hal</th><th>Past simple (V2)</th><th>Past participle (V3)</th><th>Türkçesi</th></tr>
+  </table></div>
+</div>
+</template>
+
+<template id="tpl-phrases">
+<div class="page">
+  <div class="hero"><div class="plate-k">Ekler</div><h1>Faydalı kalıplar</h1><p>Konuşma ve yazma için hazır cümleler: fikir söylemek, rica etmek, telefon, e-posta, sorun çözmek. Hoparlöre bas ve tekrar et.</p></div>
+  <div id="phrase-list"></div>
+</div>
+</template>
+
+<template id="tpl-mistakes">
+<div class="page">
+  <div class="hero"><div class="plate-k">Ekler</div><h1>Sık yapılan hatalar</h1><p>Türkçe konuşanların İngilizcede en sık yaptığı hatalar: yanlış cümle, doğru cümle ve sebebi. Sınavdan önce bir kez baştan sona oku.</p></div>
+  <div id="mistake-list"></div>
+</div>
+</template>
+
+<script src="data/voices.js"></script>
+<script src="data/day01.js"></script>
+<script src="data/day02.js"></script>
+<script src="data/day03.js"></script>
+<script src="data/day04.js"></script>
+<script src="data/day05.js"></script>
+<script src="data/day06.js"></script>
+<script src="data/day07.js"></script>
+<script src="data/day08.js"></script>
+<script src="data/day09.js"></script>
+<script src="data/day10.js"></script>
+<script src="data/day11.js"></script>
+<script src="data/day12.js"></script>
+<script src="data/day13.js"></script>
+<script src="data/day14.js"></script>
+<script src="data/day15.js"></script>
+<script src="data/day16.js"></script>
+<script src="data/day17.js"></script>
+<script src="data/day18.js"></script>
+<script src="data/day19.js"></script>
+<script src="data/day20.js"></script>
+<script src="data/day21.js"></script>
+<script src="data/day22.js"></script>
+<script src="data/day23.js"></script>
+<script src="data/day24.js"></script>
+<script src="data/day25.js"></script>
+<script src="data/day26.js"></script>
+<script src="data/day27.js"></script>
+<script src="data/day28.js"></script>
+<script src="data/day29.js"></script>
+<script src="data/day30.js"></script>
+<script src="data/appendix.js"></script>
+<script>
+(function(){
+  var $ = function(s, el){ return (el||document).querySelector(s); };
+  var $$ = function(s, el){ return Array.prototype.slice.call((el||document).querySelectorAll(s)); };
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  var LESSONS = (window.LESSONS||[]).slice().sort(function(a,b){ return a.day-b.day; });
+  var TOTAL = 30;
+  var WEEKS = [
+    {n:1, en:"Everyday life", tr:"Günlük hayat", from:1, to:7},
+    {n:2, en:"Experiences, rules, possibilities", tr:"Deneyimler, kurallar, olasılıklar", from:8, to:14},
+    {n:3, en:"Communicating", tr:"İletişim", from:15, to:21},
+    {n:4, en:"Towards B1", tr:"B1'e doğru", from:22, to:30}
+  ];
+  var ORDER = ['warmup','dialogue','vocab','grammar','practice','reading','listen','speak','write','quiz'];
+  var DEFAULT_MINS = {warmup:15, dialogue:45, vocab:45, grammar:60, practice:45, reading:40, listen:0, speak:20, write:20, quiz:10};
+  var META = {
+    warmup:["Warm-up","Isınma"], dialogue:["Listening and dialogue","Dinleme ve diyalog"], vocab:["Vocabulary","Kelimeler"],
+    grammar:["Grammar","Dilbilgisi"], practice:["Practice","Alıştırmalar"], reading:["Reading","Okuma"], listen:["Listening","Dinleme"],
+    speak:["Speaking","Konuşma"], write:["Writing","Yazma"], quiz:["Day quiz","Günün sınavı"]
+  };
+  var PLAN_SHORT = {dialogue:"Dinleme", quiz:"Sınav"};
+  var SPK = '<svg><use href="#i-speaker"/></svg>';
+  var CHK = '<svg><use href="#i-check"/></svg>';
+  /* Turkish accusative suffix for a day number: Gün 6'yı, Gün 7'yi, Gün 10'u */
+  function acc(n){ var d = n % 10; if(d===0) return n===20 ? "'yi" : "'u"; return {1:"'i",2:"'yi",3:"'ü",4:"'ü",5:"'i",6:"'yı",7:"'yi",8:"'i",9:"'u"}[d]; }
+
+  /* ---------- storage ---------- */
+  var store = {
+    get: function(k, d){ try{ var v = localStorage.getItem(k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } },
+    set: function(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+  };
+  var done = {};
+  (store.get('e30.done', [])||[]).forEach(function(n){ done[n] = true; });
+  var studied = store.get('e30.time', {}) || {};
+  function doneCount(){ return Object.keys(done).length; }
+  function saveDone(){ store.set('e30.done', Object.keys(done).map(Number)); }
+  function nextDay(){ for(var i=1;i<=TOTAL;i++){ if(!done[i]) return i; } return TOTAL; }
+
+  /* ---------- speech fallback: the browser's own English voice ---------- */
+  var TTS = (function(){
+    var ok = ('speechSynthesis' in window) && ('SpeechSynthesisUtterance' in window);
+    var voice = null, loaded = false;
+    function load(){
+      if(!ok) return;
+      var vs = speechSynthesis.getVoices() || [];
+      if(vs.length) loaded = true;
+      voice = null;
+      var pref = ['en-GB','en-US','en_GB','en_US','en'];
+      for(var p=0;p<pref.length && !voice;p++){
+        for(var i=0;i<vs.length;i++){ if((vs[i].lang||'').toLowerCase().indexOf(pref[p].toLowerCase())===0){ voice = vs[i]; break; } }
+      }
+      var better = vs.filter(function(v){ return /^en/i.test(v.lang||'') && /natural|online|neural|google/i.test(v.name||''); });
+      if(better.length) voice = better[0];
+    }
+    if(ok){ load(); if(typeof speechSynthesis.onvoiceschanged !== 'undefined'){ speechSynthesis.onvoiceschanged = load; } }
+    function speak(text, voiceTag){
+      return new Promise(function(res){
+        if(!ok){ res(false); return; }
+        if(!loaded) load();
+        try{ speechSynthesis.cancel(); }catch(e){}
+        var u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-GB'; if(voice) u.voice = voice;
+        u.rate = 0.9; u.pitch = /^m/.test(voiceTag||'') ? 0.9 : 1.05;
+        u.onend = function(){ res(true); }; u.onerror = function(){ res(false); };
+        try{ speechSynthesis.speak(u); }catch(e){ res(false); }
+      });
+    }
+    function cancel(){ if(ok){ try{ speechSynthesis.cancel(); }catch(e){} } }
+    return { speak:speak, cancel:cancel, available:function(){ return ok; }, hasEnglish:function(){ if(!loaded) load(); return !!voice; }, loaded:function(){ return loaded; } };
+  })();
+
+  /* ---------- recorded audio: one MP3 sprite per day, cue map in audio/cues.json ---------- */
+  var AUDIO = (function(){
+    var ctx = null, cues = null, cuesP = null, raw = {}, bufs = {}, decoding = {}, current = null, currentGroup = 'extra';
+    function getCtx(){
+      var AC = window.AudioContext || window.webkitAudioContext; if(!AC) return null;
+      if(!ctx) ctx = new AC();
+      if(ctx.state === 'suspended'){ try{ ctx.resume(); }catch(e){} }
+      return ctx;
+    }
+    function loadCues(){
+      if(!cuesP) cuesP = fetch('audio/cues.json').then(function(r){ if(!r.ok) throw new Error('no cues'); return r.json(); }).then(function(j){ cues = j; return j; }).catch(function(){ cues = {}; return cues; });
+      return cuesP;
+    }
+    function fetchGroup(g){
+      if(!raw[g]) raw[g] = fetch('audio/'+g+'.mp3').then(function(r){ if(!r.ok) throw new Error('no audio'); return r.arrayBuffer(); }).catch(function(e){ delete raw[g]; throw e; });
+      return raw[g];
+    }
+    function decodeGroup(g){
+      if(bufs[g]) return Promise.resolve(bufs[g]);
+      if(decoding[g]) return decoding[g];
+      var c = getCtx(); if(!c) return Promise.reject(new Error('no audio context'));
+      decoding[g] = fetchGroup(g).then(function(ab){ return new Promise(function(res, rej){ c.decodeAudioData(ab.slice(0), res, rej); }); })
+        .then(function(b){ bufs[g] = b; delete decoding[g]; return b; })
+        .catch(function(e){ delete decoding[g]; throw e; });
+      return decoding[g];
+    }
+    function stop(){ if(current){ try{ current.onended = null; current.stop(); }catch(e){} current = null; } TTS.cancel(); }
+    function playClip(g, id){
+      return decodeGroup(g).then(function(buf){
+        var c = getCtx(), cue = cues[g][id];
+        stop();
+        return new Promise(function(res){
+          var src = c.createBufferSource(); src.buffer = buf; src.connect(c.destination);
+          src.onended = function(){ if(current === src) current = null; res(true); };
+          current = src; src.start(0, cue[0]/1000, cue[1]/1000);
+        });
+      });
+    }
+    function play(text, voiceTag){
+      var g = currentGroup; text = VOICES.ttsText(text); voiceTag = voiceTag || 'f2';
+      var id = VOICES.key(voiceTag, text);
+      return loadCues().then(function(){
+        if(cues[g] && cues[g][id]) return playClip(g, id).catch(function(){ return TTS.speak(text, voiceTag); });
+        return TTS.speak(text, voiceTag);
+      });
+    }
+    function setGroup(g){ currentGroup = g; loadCues().then(function(){ if(cues[g]) fetchGroup(g).catch(function(){}); }); }
+    function hasClips(g){ return loadCues().then(function(){ return !!cues[g] && Object.keys(cues[g]).length > 0; }); }
+    return { play:play, stop:stop, setGroup:setGroup, group:function(){ return currentGroup; }, hasClips:hasClips };
+  })();
+  function sayBtn(text, voiceTag){ return '<button class="say" type="button" data-say="'+esc(text)+'"'+(voiceTag?' data-voice="'+voiceTag+'"':'')+' aria-label="Dinle">'+SPK+'</button>'; }
+  /* [[English]] markers in HTML content become a speaker button followed by the sentence;
+     <b> and <i> inside a marker stay as highlighting (the spoken text drops them) */
+  function exHtml(t){ return esc(t).replace(/&lt;(\/?)(b|i)&gt;/g, '<$1$2>'); }
+  function html(s){ return String(s==null?'':s).replace(/\[\[([^\[\]]+?)\]\]/g, function(m, t){ return sayBtn(t)+'<span class="ex-en">'+exHtml(t)+'</span>'; }); }
+  function ttsNotice(){
+    var el = $('#tts-note'); if(!el) return;
+    AUDIO.hasClips(AUDIO.group()).then(function(has){
+      if(has){ el.classList.remove('show'); return; }
+      if(!TTS.available()){ el.textContent = 'Kayıtlı ses yüklenemedi ve tarayıcında konuşma motoru yok; hoparlör düğmeleri sessiz kalacak.'; el.classList.add('show'); return; }
+      if(TTS.loaded() && !TTS.hasEnglish()){ el.textContent = 'Kayıtlı ses yüklenemedi ve bu tarayıcıda İngilizce ses yüklü değil; yedek ses yanlış duyulabilir. Bağlantını kontrol edip sayfayı yenile.'; el.classList.add('show'); }
+    });
+  }
+
+  /* ---------- nav ---------- */
+  function renderNav(){
+    var h = '<a href="#start" data-route="start">Başlangıç</a>';
+    WEEKS.forEach(function(w){
+      h += '<div class="nav-wk">Hafta '+w.n+' · '+esc(w.tr)+'<small>'+esc(w.en)+'</small></div>';
+      for(var d=w.from; d<=w.to; d++){
+        var L = LESSONS.filter(function(x){ return x.day===d; })[0];
+        h += '<a href="#day'+d+'" data-route="day'+d+'" class="'+(done[d]?'isdone':'')+'"><span class="n">'+d+'</span><span class="t">'+esc(L?L.title:'Hazırlanıyor…')+'</span><span class="d">'+CHK+'</span></a>';
+      }
+    });
+    h += '<div class="nav-wk">Ekler<small>Appendix</small></div>';
+    h += '<a href="#grammar" data-route="grammar">Dilbilgisi özeti</a><a href="#verbs" data-route="verbs">Düzensiz fiiller</a><a href="#phrases" data-route="phrases">Faydalı kalıplar</a><a href="#mistakes" data-route="mistakes">Sık yapılan hatalar</a>';
+    $('#nav').innerHTML = h;
+    updateProgress();
+  }
+  function updateProgress(){
+    var n = doneCount();
+    $('#pfill').style.width = Math.round(n/TOTAL*100)+'%';
+    $('#ptext').textContent = n+' / '+TOTAL+' gün tamamlandı';
+    $('#tb-prog').textContent = n+' / '+TOTAL;
+    $$('#nav a[data-route^="day"]').forEach(function(a){ var d = +a.getAttribute('data-route').slice(3); a.classList.toggle('isdone', !!done[d]); });
+  }
+  function setActive(route){
+    $$('#nav a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-route')===route); });
+    var act = $('#nav a.active'); if(act && act.scrollIntoView){ try{ act.scrollIntoView({block:'nearest'}); }catch(e){} }
+  }
+  function openSide(){ $('#side').classList.add('open'); $('#backdrop').classList.add('show'); }
+  function closeSide(){ $('#side').classList.remove('open'); $('#backdrop').classList.remove('show'); }
+
+  /* ---------- helpers ---------- */
+  var SCORE = '<div class="score" hidden><button class="sc ok" type="button" data-v="1">✓ Doğru</button><button class="sc no" type="button" data-v="0">✗ Yanlış</button></div>';
+  function exItem(it){
+    if(typeof it === 'string') return '<li class="ex"><p class="q">'+html(it)+'</p></li>';
+    var q = it[0], a = it[1], tr = it[2];
+    return '<li class="ex"><p class="q">'+html(q)+'</p><button class="reveal" type="button">Cevabı göster</button><div class="ans" hidden>'+html(a)+(tr?'<span class="tr">'+html(tr)+'</span>':'')+'</div>'+SCORE+'</li>';
+  }
+  function exList(items, cls){ return '<ol class="exl '+(cls||'')+'">'+items.map(exItem).join('')+'</ol>'; }
+  function secHead(key, mins, labels){
+    var lab = (labels && labels[key]) || META[key];
+    var chip = mins>0 ? '<button class="chip tchip" type="button" data-key="'+key+'" data-mins="'+mins+'" data-label="'+esc(lab[1])+'" title="Bu bölüm için sayacı başlat">'+mins+' dk</button>' : '';
+    return '<h2>'+chip+esc(lab[0])+' <span class="en">'+esc(lab[1])+'</span></h2>';
+  }
+  function planBar(mins, labels){
+    var h = '<div class="plan">';
+    ORDER.forEach(function(k){ if(mins[k]>0){ var lab = ((labels&&labels[k])||META[k])[1]; var short = (labels&&labels[k]) ? lab : (PLAN_SHORT[k]||lab); var txt = mins[k]>=40 ? esc(short)+' '+mins[k] : (mins[k]>=15 ? String(mins[k]) : ''); h += '<span style="flex:'+mins[k]+' 1 0" title="'+esc(lab)+' '+mins[k]+' dk">'+txt+'</span>'; } });
+    return h + '</div><div class="plan-note">Bugünün 300 dakikasının bölümlere dağılımı. Her bölümün başlığındaki süreye tıklayarak sayacı başlat. Saatte bir 10 dakika mola ver; molalar 5 saate dahil değil.</div>';
+  }
+  function tallyFor(set){
+    var items = $$('.ex', set), r = 0, w = 0;
+    items.forEach(function(li){ if(li.classList.contains('right')) r++; else if(li.classList.contains('wrong')) w++; });
+    var t = $('.tally', set); if(t) t.textContent = (r+w) ? 'Doğru '+r+' · Yanlış '+w+' · '+items.length+' soru' : items.length+' soru';
+  }
+
+  /* ---------- timer: one section at a time, plus the day's studied total ---------- */
+  var timer = {left:0, total:0, id:null, key:null, day:0, label:''};
+  function fmt(s){ var m = Math.floor(s/60), r = s%60; return (m<10?'0':'')+m+':'+(r<10?'0':'')+r; }
+  function fmtLong(s){ var h = Math.floor(s/3600), m = Math.floor((s%3600)/60); return h ? h+' sa '+m+' dk' : m+' dk'; }
+  function timerDraw(){
+    var t = $('#t-time'); if(t) t.textContent = timer.key ? fmt(timer.left) : '--:--';
+    var l = $('#t-label'); if(l) l.textContent = timer.label || 'Bölüm sayacı';
+    var b = $('#t-start'); if(b) b.textContent = timer.id ? 'Duraklat' : (timer.key && timer.left>0 && timer.left<timer.total ? 'Devam' : 'Başlat');
+    var w = $('#timer'); if(w) w.classList.toggle('over', !!timer.key && timer.left<=0);
+    $$('.tchip').forEach(function(c){
+      var mine = c.getAttribute('data-key')===timer.key;
+      c.classList.toggle('running', mine && !!timer.id);
+      c.classList.toggle('over', mine && timer.left<=0);
+      c.textContent = mine ? (timer.left<=0 ? 'Süre doldu' : fmt(timer.left)) : c.getAttribute('data-mins')+' dk';
+    });
+    var tot = $('#t-total'); if(tot) tot.textContent = 'Bugün çalıştığın süre: '+fmtLong(studied[timer.day]||0)+' / 5 sa';
+  }
+  function timerStop(){ if(timer.id){ clearInterval(timer.id); timer.id = null; store.set('e30.time', studied); } }
+  function timerStart(){
+    if(timer.id || !timer.key || timer.left<=0) return;
+    timer.id = setInterval(function(){
+      timer.left--; studied[timer.day] = (studied[timer.day]||0) + 1;
+      if(studied[timer.day] % 20 === 0) store.set('e30.time', studied);
+      if(timer.left<=0){ timer.left = 0; timerStop(); }
+      timerDraw();
+    }, 1000);
+    timerDraw();
+  }
+  function timerSelect(key, mins, label){
+    timerStop();
+    timer.key = key; timer.total = mins*60; timer.left = mins*60; timer.label = label;
+    timerStart();
+  }
+  function timerToggle(){
+    if(timer.id){ timerStop(); timerDraw(); return; }
+    if(!timer.key){ var first = $('.tchip'); if(first){ timerSelect(first.getAttribute('data-key'), +first.getAttribute('data-mins'), first.getAttribute('data-label')); } return; }
+    if(timer.left<=0) timer.left = timer.total;
+    timerStart();
+  }
+  function timerReset(){ timerStop(); timer.left = timer.total; timerDraw(); }
+  function timerClear(){ timerStop(); timer.key = null; timer.left = 0; timer.total = 0; timer.label = ''; }
+
+  /* ---------- day page ---------- */
+  function renderDay(n){
+    var L = LESSONS.filter(function(x){ return x.day===n; })[0];
+    if(!L){
+      if(n<1 || n>TOTAL){ renderPage('start'); return; }
+      /* a day that is not published yet gets a short note instead of the start page */
+      timerClear(); AUDIO.stop();
+      $('#main').innerHTML = '<div class="wrap"><div class="plate"><div class="plate-num"><span class="plate-k">Gün</span><span class="plate-n">'+n+'</span></div><div class="plate-t"><h1>Hazırlanıyor</h1><p>Bu gün henüz eklenmedi. Yakında burada olacak; şimdilik sıradaki güne geçebilirsin.</p></div></div>'
+        + '<nav class="pager" aria-label="Önceki ve sonraki gün">'+(n>1?'<a href="#day'+(n-1)+'">← Gün '+(n-1)+'</a>':'<a href="#start">← Başlangıç</a>')+(n<TOTAL?'<a href="#day'+(n+1)+'">Gün '+(n+1)+' →</a>':'')+'</nav></div>';
+      return;
+    }
+    timerClear(); timer.day = n; AUDIO.stop();
+    var mins = {}; for(var k in DEFAULT_MINS) mins[k] = DEFAULT_MINS[k];
+    if(L.mins) for(var k2 in L.mins) mins[k2] = L.mins[k2];
+    ORDER.forEach(function(k){ if(!L[k]) mins[k] = 0; });
+    var labels = L.labels || {};
+    var isDone = !!done[n];
+    var h = '';
+    h += '<div class="plate"><div class="plate-num"><span class="plate-k">Gün</span><span class="plate-n">'+n+'</span></div><div class="plate-t"><h1>'+esc(L.title)+'</h1><p>'+esc(L.tr)+'</p></div></div>';
+    h += '<div class="daybar"><div><div class="timer" id="timer"><span class="t-label" id="t-label">Bölüm sayacı</span><span class="t-time" id="t-time">--:--</span><button class="btn ghost sm" id="t-start" type="button">Başlat</button><button class="btn ghost sm" id="t-reset" type="button">Sıfırla</button></div><div class="t-total" id="t-total"></div></div>'
+       + '<button class="btn'+(isDone?' done':'')+'" id="btn-done" type="button">'+(isDone?CHK+'Tamamlandı · geri almak için tıkla':'Günü tamamlandı olarak işaretle')+'</button></div>';
+    h += '<section class="sec goals"><h2>Today you will learn <span class="en">Bugün öğreneceklerin</span></h2><ul class="goal-list">'+(L.goals||[]).map(function(g){ return '<li>'+html(g)+'</li>'; }).join('')+'</ul>'+planBar(mins, labels)+'</section>';
+
+    if(L.warmup){
+      h += '<section class="sec" id="s-warmup">'+secHead('warmup', mins.warmup, labels)+(L.warmup.intro?'<p class="note">'+html(L.warmup.intro)+'</p>':'')+'<div class="set">'+exList(L.warmup.items||[], 'warm-list')+'</div></section>';
+    }
+    if(L.dialogue){
+      var D = L.dialogue;
+      h += '<section class="sec" id="s-dialogue">'+secHead('dialogue', mins.dialogue, labels);
+      h += '<h3 class="sub" style="margin-top:0">'+esc(D.title)+'</h3>'+(D.scene?'<p class="scene">'+html(D.scene)+'</p>':'');
+      h += '<p class="note">Önce okumadan bir kez dinle (“Hepsini çal”). Sonra okuyarak dinle ve soruları cevapla. En son her satırı tek tek çal ve hemen ardından aynı hız ve tonlamayla tekrar et.</p>';
+      h += '<div class="controls"><button class="btn sm" id="play-all" type="button"><svg><use href="#i-play"/></svg>Hepsini çal</button><button class="btn ghost sm" id="tr-toggle" type="button">Çeviriyi gizle</button></div><div class="tts-note" id="tts-note"></div>';
+      h += '<div class="dlg" id="dlg">';
+      D.lines.forEach(function(l, idx){
+        var who = l[0], en = l[1], tr = l[2];
+        if(!who){ h += '<div class="line narr"><div class="en" style="font-style:italic">'+esc(en)+(tr?' · '+esc(tr):'')+'</div></div>'; return; }
+        h += '<div class="line" data-i="'+idx+'"><div class="who">'+esc(who)+'</div><div class="de">'+sayBtn(en, VOICES.voiceFor(who))+'<span>'+esc(en)+'</span></div><div class="en">'+esc(tr)+'</div></div>';
+      });
+      h += '</div>'+(D.note?'<p class="note" style="margin-top:8px">'+html(D.note)+'</p>':'');
+      if(D.questions && D.questions.length){ h += '<h3 class="sub">Anladın mı? <span class="en" style="font-weight:400;font-size:15px;color:var(--muted);font-family:var(--body)">Comprehension</span></h3><div class="set">'+exList(D.questions)+'</div>'; }
+      h += '</section>';
+    }
+    if(L.vocab){
+      h += '<section class="sec" id="s-vocab">'+secHead('vocab', mins.vocab, labels)+'<div class="controls"><button class="btn ghost sm" id="v-test" type="button">Kendini sına: Türkçeyi gizle</button><span class="note">'+L.vocab.length+' kelime. Her kelimeyi ve örnek cümlesini dinle, sesli tekrar et.</span></div><div class="vg" id="vg">';
+      L.vocab.forEach(function(v){
+        h += '<div class="vrow"><div class="vde">'+sayBtn(v[0])+'<div><span class="w">'+esc(v[0])+'</span></div></div><div class="ven">'+esc(v[1])+'</div>'
+           + '<div class="vex">'+sayBtn(v[2])+'<div><span class="exen">'+esc(v[2])+'</span><span class="extr">'+esc(v[3])+'</span></div></div></div>';
+      });
+      h += '</div></section>';
+    }
+    if(L.grammar){
+      h += '<section class="sec" id="s-grammar">'+secHead('grammar', mins.grammar, labels);
+      L.grammar.forEach(function(g){ h += '<div class="gb"><h3>'+html(g.h)+'</h3>'+html(g.body)+'</div>'; });
+      h += '</section>';
+    }
+    if(L.practice){
+      h += '<section class="sec" id="s-practice">'+secHead('practice', mins.practice, labels)+'<p class="note">Önce cevabını kâğıda yaz, sonra göster ve ✓ / ✗ ile puanla. Birden fazla doğru cevap olabilir; en doğal olanı gösterilir.</p>';
+      L.practice.forEach(function(set){ h += '<div class="set"><h3>'+html(set.h)+'<span class="tally">'+set.items.length+' soru</span></h3>'+(set.note?'<p class="note">'+html(set.note)+'</p>':'')+exList(set.items)+'</div>'; });
+      h += '<div class="controls" style="margin-top:12px"><button class="btn ghost sm reveal-all" type="button" data-target="s-practice">Tüm cevapları göster</button></div></section>';
+    }
+    if(L.reading){
+      var R = L.reading, rv = VOICES.READING_VOICES[n % VOICES.READING_VOICES.length];
+      h += '<section class="sec" id="s-reading">'+secHead('reading', mins.reading, labels)+'<h3 class="sub" style="margin-top:0">'+esc(R.title)+'</h3>'+(R.intro?'<p class="note">'+html(R.intro)+'</p>':'');
+      h += '<div class="controls"><button class="btn sm say-long" type="button" data-say="'+esc(VOICES.ttsText(R.text))+'" data-voice="'+rv+'"><svg><use href="#i-play"/></svg>Metni dinle</button><button class="btn ghost sm stop-audio" type="button"><svg><use href="#i-stop"/></svg>Durdur</button></div>';
+      h += '<div class="read-box">'+R.text+'</div>';
+      if(R.glossary && R.glossary.length){ h += '<h3 class="sub">Sözlükçe</h3><div>'+R.glossary.map(function(g){ return '<div class="gloss"><div class="g">'+sayBtn(g[0])+'<span>'+esc(g[0])+'</span></div><div class="e">'+esc(g[1])+'</div></div>'; }).join('')+'</div>'; }
+      if(R.questions && R.questions.length){ h += '<h3 class="sub">Sorular</h3><div class="set">'+exList(R.questions)+'</div>'; }
+      h += '</section>';
+    }
+    if(L.listen && L.listen.length){
+      h += '<section class="sec" id="s-listen">'+secHead('listen', mins.listen, labels)+'<p class="note">Çal, okumadan dinle ve cevapla. Cevabı ve metni açmadan önce en fazla üç kez dinle.</p><div class="set"><ol class="exl">';
+      L.listen.forEach(function(it, i){
+        var lv = VOICES.LISTEN_VOICES[i % VOICES.LISTEN_VOICES.length];
+        h += '<li class="ex"><div class="controls" style="margin-bottom:4px"><button class="btn sm say-long" type="button" data-say="'+esc(it.text)+'" data-voice="'+lv+'"><svg><use href="#i-play"/></svg>Çal</button></div><p class="q">'+html(it.q)+'</p><button class="reveal" type="button">Cevabı göster</button><div class="ans" hidden>'+html(it.a)+'<span class="tr"><b>Metin:</b> '+esc(it.text)+'</span></div>'+SCORE+'</li>';
+      });
+      h += '</ol></div></section>';
+    }
+    if(L.speak){
+      h += '<section class="sec" id="s-speak">'+secHead('speak', mins.speak, labels)+'<div class="speak-box">'+html(L.speak)+'</div></section>';
+    }
+    if(L.write){
+      var W = L.write;
+      h += '<section class="sec" id="s-write">'+secHead('write', mins.write, labels)+'<div class="speak-box">'+html(W.task)+'</div>';
+      h += '<div class="model-wrap"><button class="reveal" type="button" data-show="Örnek cevabı göster" data-hide="Örnek cevabı gizle">Örnek cevabı göster</button><div class="ans model" hidden>'+html(W.model)+'</div></div>';
+      if(W.checklist && W.checklist.length){ h += '<h3 class="sub">Kontrol listesi</h3><ul class="checklist">'+W.checklist.map(function(c, i){ return '<li><input type="checkbox" id="ck'+i+'"><label for="ck'+i+'">'+html(c)+'</label></li>'; }).join('')+'</ul>'; }
+      h += '</section>';
+    }
+    if(L.quiz){
+      h += '<section class="sec" id="s-quiz">'+secHead('quiz', mins.quiz, labels)+'<p class="note">Bakmadan cevapla, sonra puanla. 10 üzerinden 8 ve üstü: yarına hazırsın. Daha azsa yanlışlarını hata defterine yaz ve ilgili bölümü bir kez daha oku.</p><div class="set"><h3>Sorular<span class="tally">'+L.quiz.length+' soru</span></h3>'+exList(L.quiz)+'</div></section>';
+    }
+    if(L.tip){ h += '<aside class="tip"><div class="k">Günün ipucu</div><h3>'+html(L.tip.h)+'</h3>'+html(L.tip.body)+'</aside>'; }
+    if(L.cando){
+      h += '<section class="sec cando"><h2>I can now … <span class="en">Artık yapabiliyorum …</span></h2><ul>'+L.cando.map(function(c){ return '<li>'+CHK+'<span>'+html(c)+'</span></li>'; }).join('')+'</ul>';
+      h += '<button class="btn'+(isDone?' done':'')+' btn-done2" type="button">'+(isDone?CHK+'Gün '+n+' tamamlandı · geri almak için tıkla':'Gün '+n+acc(n)+' tamamlandı olarak işaretle')+'</button></section>';
+    }
+    var prev = n>1 ? '<a href="#day'+(n-1)+'">← Gün '+(n-1)+'</a>' : '<a href="#start">← Başlangıç</a>';
+    var next = n<TOTAL ? '<a href="#day'+(n+1)+'">Gün '+(n+1)+' →</a>' : '<a href="#grammar">Dilbilgisi özeti →</a>';
+    h += '<nav class="pager" aria-label="Önceki ve sonraki gün">'+prev+next+'</nav>';
+    $('#main').innerHTML = '<div class="wrap">'+h+'</div>';
+    wireDay(L);
+    timerDraw();
+  }
+  function wireDay(L){
+    var n = L.day;
+    var ts = $('#t-start'), tr = $('#t-reset');
+    if(ts) ts.addEventListener('click', timerToggle);
+    if(tr) tr.addEventListener('click', timerReset);
+    function toggleDone(){
+      if(done[n]) delete done[n]; else done[n] = true;
+      saveDone(); updateProgress();
+      var d = !!done[n];
+      $$('#btn-done, .btn-done2').forEach(function(b){ b.classList.toggle('done', d); });
+      var b1 = $('#btn-done'); if(b1) b1.innerHTML = d ? CHK+'Tamamlandı · geri almak için tıkla' : 'Günü tamamlandı olarak işaretle';
+      var b2 = $('.btn-done2'); if(b2) b2.innerHTML = d ? CHK+'Gün '+n+' tamamlandı · geri almak için tıkla' : 'Gün '+n+acc(n)+' tamamlandı olarak işaretle';
+    }
+    $$('#btn-done, .btn-done2').forEach(function(b){ b.addEventListener('click', toggleDone); });
+    var pa = $('#play-all'), playing = false, session = 0;
+    function markLine(idx){ $$('#dlg .line.playing').forEach(function(x){ x.classList.remove('playing'); }); if(idx!=null){ var el = $('#dlg .line[data-i="'+idx+'"]'); if(el) el.classList.add('playing'); } }
+    function stopAll(){ AUDIO.stop(); playing = false; session++; markLine(null); if(pa) pa.innerHTML = '<svg><use href="#i-play"/></svg>Hepsini çal'; }
+    var dlgEl = $('#dlg'); if(dlgEl) dlgEl.__stopAll = stopAll;
+    if(pa) pa.addEventListener('click', function(){
+      if(playing){ stopAll(); return; }
+      var my = ++session; playing = true; pa.innerHTML = '<svg><use href="#i-stop"/></svg>Durdur';
+      ttsNotice();
+      var i = 0, lines = L.dialogue.lines;
+      function next(){
+        if(my !== session || !document.body.contains(pa)) return;
+        while(i < lines.length && !lines[i][0]) i++;
+        if(i >= lines.length){ playing = false; markLine(null); pa.innerHTML = '<svg><use href="#i-play"/></svg>Hepsini çal'; return; }
+        var l = lines[i], idx = i; i++;
+        markLine(idx);
+        AUDIO.play(l[1], VOICES.voiceFor(l[0])).then(function(){ if(my !== session) return; setTimeout(next, 450); });
+      }
+      next();
+    });
+    var tt = $('#tr-toggle');
+    if(tt) tt.addEventListener('click', function(){ var d = $('#dlg'); d.classList.toggle('hide-en'); tt.textContent = d.classList.contains('hide-en') ? 'Çeviriyi göster' : 'Çeviriyi gizle'; });
+    var vt = $('#v-test');
+    if(vt) vt.addEventListener('click', function(){ var g = $('#vg'); g.classList.toggle('test'); $$('.vrow', g).forEach(function(r){ r.classList.remove('show'); }); vt.textContent = g.classList.contains('test') ? 'Türkçeyi göster' : 'Kendini sına: Türkçeyi gizle'; });
+    ttsNotice();
+  }
+
+  /* ---------- static pages ---------- */
+  function renderPage(id){
+    timerClear(); AUDIO.stop();
+    var t = $('#tpl-'+id); if(!t){ t = $('#tpl-start'); id = 'start'; }
+    $('#main').innerHTML = '<div class="wrap">'+html(t.innerHTML)+'</div>';
+    if(id==='start'){
+      var nd = nextDay(), c = doneCount();
+      $('#cont-title').textContent = c===0 ? 'Gün 1 ile başla' : (c>=TOTAL ? '30 günün tamamı bitti. Tebrikler!' : 'Gün '+nd+' ile devam et');
+      $('#cont-sub').textContent = c===0 ? 'İlerlemen bu tarayıcıda, bu cihazda saklanır.' : c+' / 30 gün tamamlandı. İlerlemen bu tarayıcıda, bu cihazda saklanır.';
+      var b = $('#cont-btn'); b.setAttribute('href', '#day'+(c>=TOTAL?1:nd)); b.textContent = c>=TOTAL ? 'Gün 1\'den yeniden başla' : 'Gün '+nd+acc(nd)+' aç';
+      var wc = '';
+      WEEKS.forEach(function(w){
+        wc += '<div class="card"><div class="k">Hafta '+w.n+'</div><h3>'+esc(w.tr)+'</h3><p class="note">'+esc(w.en)+'</p><ol start="'+w.from+'">';
+        for(var d=w.from; d<=w.to; d++){ var L = LESSONS.filter(function(x){ return x.day===d; })[0]; wc += '<li><a href="#day'+d+'">'+esc(L?L.title:'Hazırlanıyor…')+'</a>'+(done[d]?' ✓':'')+'</li>'; }
+        wc += '</ol></div>';
+      });
+      $('#week-cards').innerHTML = wc;
+    }
+    if(id==='verbs' && window.VERBS){
+      var vh = '<tr><th>Yalın hal</th><th>Past simple (V2)</th><th>Past participle (V3)</th><th>Türkçesi</th></tr>';
+      window.VERBS.forEach(function(v){ vh += '<tr><td class="k">'+sayBtn(VOICES.verbText(v))+' '+esc(v[0])+'</td><td>'+esc(v[1])+'</td><td>'+esc(v[2])+'</td><td>'+esc(v[3])+'</td></tr>'; });
+      $('#verb-table').innerHTML = vh;
+    }
+    if(id==='phrases' && window.PHRASES){
+      var ph = '';
+      window.PHRASES.forEach(function(group){
+        ph += '<h2>'+esc(group.h)+'</h2>';
+        group.items.forEach(function(p){ ph += '<div class="phr"><div class="g">'+sayBtn(p[0])+'<span>'+esc(p[0])+'</span></div><div class="e">'+esc(p[1])+'</div></div>'; });
+      });
+      $('#phrase-list').innerHTML = ph;
+    }
+    if(id==='mistakes' && window.MISTAKES){
+      var mh = '';
+      window.MISTAKES.forEach(function(group){
+        mh += '<h2>'+esc(group.h)+'</h2>';
+        group.items.forEach(function(m){ mh += '<div class="mis"><div class="bad">'+esc(m[0])+'</div><div class="good">'+sayBtn(m[1])+'<span>'+esc(m[1])+'</span></div><div class="why">'+html(m[2])+'</div></div>'; });
+      });
+      $('#mistake-list').innerHTML = mh;
+    }
+  }
+
+  /* ---------- router ---------- */
+  function route(){
+    var h = (location.hash || '#start').slice(1);
+    /* ?page=day3 opens a page without a hash, for tools that drop the hash */
+    var qp = /[?&]page=([a-z0-9]+)/i.exec(location.search); if(!location.hash && qp) h = qp[1];
+    if(!/^[a-z0-9]+$/i.test(h)) h = 'start';
+    var isDay = /^day\d+$/.test(h);
+    var r = isDay ? h : ($('#tpl-'+h) ? h : 'start');
+    AUDIO.setGroup(isDay ? h : 'extra');
+    if(isDay){ renderDay(+h.slice(3)); }
+    else { renderPage(h); }
+    setActive(r);
+    store.set('e30.last', r);
+    closeSide();
+    window.scrollTo(0,0);
+  }
+
+  /* ---------- global events ---------- */
+  document.addEventListener('click', function(e){
+    var say = e.target.closest('.say, .say-long');
+    if(say){ var dl = $('#dlg'); if(dl && dl.__stopAll) dl.__stopAll(); ttsNotice(); AUDIO.play(say.getAttribute('data-say'), say.getAttribute('data-voice') || 'f2'); return; }
+    if(e.target.closest('.stop-audio')){ AUDIO.stop(); var dl2 = $('#dlg'); if(dl2 && dl2.__stopAll) dl2.__stopAll(); return; }
+    var chip = e.target.closest('.tchip');
+    if(chip){
+      var key = chip.getAttribute('data-key');
+      if(timer.key===key && timer.id){ timerStop(); timerDraw(); return; }
+      if(timer.key===key && timer.left>0){ timerStart(); return; }
+      timerSelect(key, +chip.getAttribute('data-mins'), chip.getAttribute('data-label'));
+      return;
+    }
+    var rv = e.target.closest('.reveal');
+    if(rv){
+      var ans = rv.parentNode.querySelector('.ans');
+      if(ans){ ans.hidden = !ans.hidden; rv.textContent = ans.hidden ? (rv.getAttribute('data-show')||'Cevabı göster') : (rv.getAttribute('data-hide')||'Cevabı gizle'); var sc = rv.parentNode.querySelector('.score'); if(sc) sc.hidden = ans.hidden; }
+      return;
+    }
+    var scb = e.target.closest('.sc');
+    if(scb){ var li = scb.closest('.ex'); var v = scb.getAttribute('data-v')==='1'; li.classList.toggle('right', v); li.classList.toggle('wrong', !v); var set = li.closest('.set'); if(set) tallyFor(set); return; }
+    var ra = e.target.closest('.reveal-all');
+    if(ra){ var sec = document.getElementById(ra.getAttribute('data-target')); if(sec){ var anyHidden = $$('.ans', sec).some(function(a){ return a.hidden; }); $$('.ans', sec).forEach(function(a){ a.hidden = !anyHidden; }); $$('.score', sec).forEach(function(s){ s.hidden = !anyHidden; }); $$('.reveal', sec).forEach(function(b){ b.textContent = anyHidden ? 'Cevabı gizle' : 'Cevabı göster'; }); ra.textContent = anyHidden ? 'Tüm cevapları gizle' : 'Tüm cevapları göster'; } return; }
+    var row = e.target.closest('.vrow');
+    if(row && row.parentNode.classList.contains('test') && !e.target.closest('.say')){ row.classList.toggle('show'); return; }
+  });
+  $('#menu-btn').addEventListener('click', function(){ if($('#side').classList.contains('open')) closeSide(); else openSide(); });
+  $('#backdrop').addEventListener('click', closeSide);
+  window.addEventListener('hashchange', route);
+  window.addEventListener('beforeunload', function(){ store.set('e30.time', studied); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeSide(); });
+
+  renderNav();
+  route();
+})();
+</script>
+
+</body>
+</html>
